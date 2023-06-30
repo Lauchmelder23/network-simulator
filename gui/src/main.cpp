@@ -1,6 +1,10 @@
 #include <iostream>
 
 #include <SDL.h>
+#include "imgui.h"
+#include "imgui_impl_sdl3.h"
+#include "imgui_impl_sdlrenderer3.h"
+
 #include "Netsim.hpp"
 
 int main(int argc, char** argv) {
@@ -11,18 +15,26 @@ int main(int argc, char** argv) {
     SDL_CreateWindowAndRenderer(1000, 1000, NULL, &window, &renderer);
     SDL_SetWindowTitle(window, "netsim");
 
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+
+    ImGui_ImplSDL3_InitForSDLRenderer(window, renderer);
+    ImGui_ImplSDLRenderer3_Init(renderer);
+
+    ImGuiIO& io = ImGui::GetIO();
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
+    ImGui::StyleColorsDark();
+
     Network network("Testnet");
-
-    network.addDevice(Device::create("FA:56:A7:12:04:ED"));
-    network.addDevice(Device::create("87:1A:B5:77:3D:33"));
-
-    std::cout << network << std::endl;
 
     bool shouldClose = false;
     SDL_Event event;
 
     while (!shouldClose) {
         while (SDL_PollEvent(&event)) {
+            ImGui_ImplSDL3_ProcessEvent(&event);
+
             switch (event.type) {
                 case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
                 case SDL_EVENT_QUIT:
@@ -34,8 +46,32 @@ int main(int argc, char** argv) {
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
 
+        ImGui_ImplSDL3_NewFrame();
+        ImGui_ImplSDLRenderer3_NewFrame();
+        ImGui::NewFrame();
+
+        if (ImGui::BeginMainMenuBar()) {
+
+            if (ImGui::BeginMenu("New...")) {
+                if (ImGui::MenuItem("Host")) {
+                    network.addDevice(Device::create("12:34:56:78:9A:BC"));
+                };
+
+                ImGui::EndMenu();
+            }
+
+            ImGui::EndMainMenuBar();
+        }
+
+        ImGui::Render();
+        ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData());
+
         SDL_RenderPresent(renderer);
     }
+
+    ImGui_ImplSDLRenderer3_Shutdown();
+    ImGui_ImplSDL3_Shutdown();
+    ImGui::DestroyContext();
 
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
