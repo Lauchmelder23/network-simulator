@@ -13,8 +13,11 @@ public:
     void Render(SDL_Renderer* renderer) const;
     void Deselect();
 
+    bool PropagateEvent(SDL_Event* event);
+
 private:
     SDL_FRect bbox;
     bool selected;
+    bool grabbed;
     std::shared_ptr<Device> device;
 };
