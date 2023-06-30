@@ -13,7 +13,7 @@ void NetworkRenderer::AddDevice(std::shared_ptr<Device> device, uint16_t x, uint
 }
 
 void NetworkRenderer::PropagateEvent(SDL_Event* event) {
-    if (event->type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
+    if (event->type == SDL_EVENT_MOUSE_BUTTON_DOWN && event->button.button == SDL_BUTTON_LEFT) {
         for (DeviceRenderer& device : devices) {
             device.Deselect();
         }

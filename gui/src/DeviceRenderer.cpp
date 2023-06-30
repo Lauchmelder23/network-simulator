@@ -26,10 +26,12 @@ bool DeviceRenderer::PropagateEvent(SDL_Event* event) {
         float x, y;
         SDL_GetMouseState(&x, &y);
 
-        if (x >= bbox.x && x <= bbox.x + bbox.w && y >= bbox.y && y <= bbox.y + bbox.h) {
-            selected = true;
-            grabbed = true;
-            return true;
+        if (event->button.button == SDL_BUTTON_LEFT) {
+            if (x >= bbox.x && x <= bbox.x + bbox.w && y >= bbox.y && y <= bbox.y + bbox.h) {
+                selected = true;
+                grabbed = true;
+                return true;
+            }
         }
 
     } else if (grabbed && event->type == SDL_EVENT_MOUSE_MOTION) {
