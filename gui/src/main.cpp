@@ -36,6 +36,11 @@ int main(int argc, char** argv) {
     while (!shouldClose) {
         while (SDL_PollEvent(&event)) {
             ImGui_ImplSDL3_ProcessEvent(&event);
+
+            if (ImGui::GetIO().WantCaptureMouse) {
+                continue;
+            }
+
             networkRenderer.PropagateEvent(&event);
 
             switch (event.type) {
@@ -70,6 +75,8 @@ int main(int argc, char** argv) {
 
             ImGui::EndMainMenuBar();
         }
+
+        networkRenderer.RenderImGui();
 
         ImGui::Render();
         ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData());

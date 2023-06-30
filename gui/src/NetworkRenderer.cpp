@@ -31,3 +31,11 @@ void NetworkRenderer::Render(SDL_Renderer* renderer) const {
         device.Render(renderer);
     }
 }
+
+void NetworkRenderer::RenderImGui() const {
+    for (const DeviceRenderer& device : devices) {
+        if (device.Selected()) {
+            device.RenderImGui();
+        }
+    }
+}

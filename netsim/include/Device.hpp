@@ -15,6 +15,6 @@ public:
 private:
     void parseAndSetMac(const std::string& macAddress);
 
-private:
+public:
     uint8_t macAddress[6];
 };

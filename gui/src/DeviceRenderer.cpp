@@ -1,6 +1,7 @@
 #include "DeviceRenderer.hpp"
 
 #include <SDL.h>
+#include <imgui.h>
 
 DeviceRenderer::DeviceRenderer(std::shared_ptr<Device> device, uint16_t x, uint16_t y) :
     device(device), selected(false), grabbed(false)
@@ -51,5 +52,13 @@ void DeviceRenderer::Render(SDL_Renderer* renderer) const {
     if (selected) {
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         SDL_RenderRect(renderer, &bbox);
+    }
+}
+
+void DeviceRenderer::RenderImGui() const {
+    if (ImGui::Begin("Device")) {
+        ImGui::InputScalarN("MAC Address", ImGuiDataType_U8, device->macAddress, 6, NULL, NULL, "%02X");
+
+        ImGui::End();
     }
 }
