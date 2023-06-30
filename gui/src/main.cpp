@@ -6,6 +6,7 @@
 #include "imgui_impl_sdlrenderer3.h"
 
 #include "Netsim.hpp"
+#include "NetworkRenderer.hpp"
 
 int main(int argc, char** argv) {
     SDL_Init(SDL_INIT_VIDEO);
@@ -27,6 +28,7 @@ int main(int argc, char** argv) {
     ImGui::StyleColorsDark();
 
     Network network("Testnet");
+    NetworkRenderer networkRenderer(network);
 
     bool shouldClose = false;
     SDL_Event event;
@@ -46,6 +48,8 @@ int main(int argc, char** argv) {
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
 
+        networkRenderer.Render(renderer);
+
         ImGui_ImplSDL3_NewFrame();
         ImGui_ImplSDLRenderer3_NewFrame();
         ImGui::NewFrame();
@@ -54,7 +58,10 @@ int main(int argc, char** argv) {
 
             if (ImGui::BeginMenu("New...")) {
                 if (ImGui::MenuItem("Host")) {
-                    network.addDevice(Device::create("12:34:56:78:9A:BC"));
+                    auto device = Device::create("12:34:56:78:9A:BC");
+
+                    network.addDevice(device);
+                    networkRenderer.AddDevice(device, 400, 400);
                 };
 
                 ImGui::EndMenu();
