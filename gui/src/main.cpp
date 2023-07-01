@@ -1,4 +1,5 @@
 #include <iostream>
+#include <random>
 
 #include <SDL.h>
 #include "imgui.h"
@@ -9,6 +10,7 @@
 #include "NetworkRenderer.hpp"
 
 int main(int argc, char** argv) {
+    srand(time(NULL));
     SDL_Init(SDL_INIT_VIDEO);
 
     SDL_Window* window;
@@ -64,7 +66,7 @@ int main(int argc, char** argv) {
 
             if (ImGui::BeginMenu("New...")) {
                 if (ImGui::MenuItem("Host")) {
-                    auto device = Device::create("12:34:56:78:9A:BC");
+                    auto device = Device::create();
 
                     network.addDevice(device);
                     networkRenderer.AddDevice(device, 400, 400);

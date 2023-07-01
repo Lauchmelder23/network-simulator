@@ -7,8 +7,9 @@ Device::Device(const std::string& macAddress) {
     parseAndSetMac(macAddress);
 }
 
-std::shared_ptr<Device> Device::create(const std::string& macAddress) {
-    return std::make_shared<Device>(macAddress);
+Device::Device(uint8_t a, uint8_t b, uint8_t c, uint8_t d, uint8_t e, uint8_t f) :
+    macAddress{a, b, c, d, e, f}
+{
 }
 
 void Device::parseAndSetMac(const std::string& mac) {
