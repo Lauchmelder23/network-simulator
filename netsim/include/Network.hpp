@@ -15,6 +15,10 @@ public:
 
     void AddDevice(std::shared_ptr<Device> device);
 
+    void SendCycle();
+    void ReceiveCycle();
+    void Cycle();
+
 private:
     std::vector<std::shared_ptr<Device>> devices;
     std::string name;

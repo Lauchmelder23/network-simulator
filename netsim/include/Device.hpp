@@ -25,6 +25,9 @@ public:
 
     void Connect(std::shared_ptr<Device> other);
 
+    void Send();
+    void Receive();
+
 private:
     void parseAndSetMac(const std::string& macAddress);
 

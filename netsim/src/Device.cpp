@@ -34,6 +34,26 @@ void Device::Connect(std::shared_ptr<Device> other) {
     other->port->Connect(port);
 }
 
+void Device::Send() {
+    port->Send({40});
+}
+
+void Device::Receive() {
+    std::vector<uint8_t> data = port->Receive();
+    
+    if (data.size() != 0) {
+        std::cout << "Device " << *this << " received data: " << std::endl;
+        std::cout << "{";
+
+        for (uint8_t byte : data) {
+            std::cout << (int)byte << ", ";
+        }
+
+        std::cout << "}" << std::endl;
+    }
+
+}
+
 std::ostream& operator<<(std::ostream& os, const Device& device) {
     printf(
         "%02X:%02X:%02X:%02X:%02X:%02X",

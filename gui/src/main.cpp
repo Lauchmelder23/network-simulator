@@ -40,6 +40,8 @@ int main(int argc, char** argv) {
 
     dev1->Connect(dev2);
 
+    network.Cycle();
+
     bool shouldClose = false;
     SDL_Event event;
 
