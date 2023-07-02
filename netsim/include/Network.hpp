@@ -13,7 +13,7 @@ public:
 public:
     Network(const std::string& name);
 
-    void addDevice(std::shared_ptr<Device> device);
+    void AddDevice(std::shared_ptr<Device> device);
 
 private:
     std::vector<std::shared_ptr<Device>> devices;

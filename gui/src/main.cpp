@@ -35,10 +35,10 @@ int main(int argc, char** argv) {
     auto dev1 = Device::Create();
     auto dev2 = Device::Create();
 
-    dev1->Connect(dev2);
+    network.AddDevice(dev1);
+    network.AddDevice(dev2);
 
-    networkRenderer.AddDevice(dev1, 300, 400);
-    networkRenderer.AddDevice(dev2, 500, 400);
+    dev1->Connect(dev2);
 
     bool shouldClose = false;
     SDL_Event event;
@@ -76,7 +76,7 @@ int main(int argc, char** argv) {
                 if (ImGui::MenuItem("Host")) {
                     auto device = Device::Create();
 
-                    network.addDevice(device);
+                    network.AddDevice(device);
                     networkRenderer.AddDevice(device, 400, 400);
                 };
 

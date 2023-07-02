@@ -7,7 +7,7 @@ Network::Network(const std::string& name) :
 {
 }
 
-void Network::addDevice(std::shared_ptr<Device> device) {
+void Network::AddDevice(std::shared_ptr<Device> device) {
     devices.push_back(device);
 }
 
