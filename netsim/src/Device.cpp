@@ -3,7 +3,10 @@
 #include <sstream>
 #include <iostream>
 
+#include "Port.hpp"
+
 Device::Device(const std::string& macAddress) {
+    port = std::make_shared<Port>();
     parseAndSetMac(macAddress);
 }
 

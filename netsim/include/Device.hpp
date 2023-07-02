@@ -5,6 +5,8 @@
 #include <string>
 #include <memory>
 
+class Port;
+
 class Device {
 public:
     friend std::ostream& operator<<(std::ostream& os, const Device& device);
@@ -23,6 +25,9 @@ public:
 
 private:
     void parseAndSetMac(const std::string& macAddress);
+
+private:
+    std::shared_ptr<Port> port;
 
 public:
     uint8_t macAddress[6];
